@@ -59,31 +59,37 @@ export default function WelcomeSplash() {
    * control), we swap to a static fallback photo instead of leaving a
    * black screen. The splash itself (logo, tagline, progress) still runs.
    */
+  
   useEffect(() => {
     if (!show || videoFailed) return;
 
     const video = videoRef.current;
-
     if (!video) return;
 
     video.muted = true;
     video.playsInline = true;
 
-    const tryPlay = () => {
-      video.play().catch(() => {
-        setVideoFailed(true);
+    const handleCanPlay = () => {
+      video.play().catch((error: unknown) => {
+        // Don't immediately replace the video for a temporary playback issue.
+        console.warn('Welcome video playback issue:', error);
       });
     };
 
-    tryPlay();
+    const handleError = () => {
+      setVideoFailed(true);
+    };
 
-    video.addEventListener('canplay', tryPlay);
-    video.addEventListener('loadeddata', tryPlay);
-    video.addEventListener('error', () => setVideoFailed(true));
+    video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('error', handleError);
+
+    if (video.readyState >= 3) {
+      handleCanPlay();
+    }
 
     return () => {
-      video.removeEventListener('canplay', tryPlay);
-      video.removeEventListener('loadeddata', tryPlay);
+      video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('error', handleError);
     };
   }, [show, videoFailed]);
 
@@ -110,13 +116,13 @@ export default function WelcomeSplash() {
               muted
               loop
               playsInline
-              preload="auto"
+              preload="metadata"
               poster="/videos/welcome-poster.jpg"
               className="absolute inset-0 w-full h-full object-contain"
               aria-hidden="true"
             >
               <source
-                src="/videos/welcome-video.mp4"
+                src="/videos/Fast Welcome Video.mp4"
                 type="video/mp4"
               />
             </video>
