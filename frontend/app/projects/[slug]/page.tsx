@@ -54,7 +54,7 @@ type Project = {
 | Django/Render may return either:
 |   /media/...
 | or:
-|   https://127.0.0.1:8000/media/...
+|   `${BACKEND_URL}/media/...`
 |
 | This helper supports both.
 |--------------------------------------------------------------------------

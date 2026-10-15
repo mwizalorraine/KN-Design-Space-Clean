@@ -4,6 +4,9 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
 
+const API_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
+
 const links = [
   { label: 'Home', href: '/' },
   { label: 'Projects', href: '/projects' },
@@ -79,7 +82,7 @@ useEffect(() => {
 
   useEffect(() => {
     if (searchOpen && allProjects.length === 0) {
-      fetch('http://127.0.0.1:8000/api/projects/')
+      fetch(`${API_URL}/api/projects/`)
         .then((res) => res.json())
         .then(setAllProjects)
         .catch(() => setAllProjects([]));

@@ -5,6 +5,9 @@ import Link from 'next/link';
 import NavOverlay from '../../../components/NavOverlay';
 import Cursor from '../../../components/Cursor ';
 
+const API_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
+
 const categoryLabels: Record<string, string> = {
   education: 'Education & Institutional',
   health: 'Health & Foodservice',
@@ -31,7 +34,7 @@ export default function CategoryPage() {
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/projects/')
+    fetch(`${API_URL}/api/projects/`)
       .then((res) => res.json())
       .then((data: Project[]) => setProjects(data.filter((p) => p.category === category)))
       .catch(() => setProjects([]));

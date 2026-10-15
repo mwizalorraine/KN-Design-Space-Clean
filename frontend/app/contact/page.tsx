@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import NavOverlay from '../components/NavOverlay';
 import Cursor from '../components/Cursor ';
 
+const API_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
+
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
@@ -16,7 +19,7 @@ export default function Contact() {
     e.preventDefault();
     setStatus('sending');
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/contact/', {
+      const res = await fetch(`${API_URL}/api/contact/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),

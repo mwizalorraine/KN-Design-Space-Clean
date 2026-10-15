@@ -5,6 +5,9 @@ import Link from 'next/link';
 import NavOverlay from '../components/NavOverlay';
 import Cursor from '../components/Cursor ';;
 
+const API_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
+
 type Project = {
   id: number;
   title: string;
@@ -34,7 +37,7 @@ export default function ProjectsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/projects/')
+    fetch(`${API_URL}/api/projects/`)
       .then((res) => {
         if (!res.ok) {
           throw new Error('Failed to fetch projects');

@@ -11,12 +11,11 @@ export default function ServicesPage() {
       <NavOverlay />
       <Cursor />
 
-      <main className="min-h-screen bg-[var(--paper-light)] text-[var(--ink)]">
+      <main className="max-h-screen bg-[var(--paper-light)] text-[var(--ink)]">
 
-        <section
-          id="services"
-          className="relative min-h-[calc(100dvh-84px)] px-6 md:px-12 py-12 md:py-20 bg-[var(--paper-light)]"
-        >
+        <section id="services"
+          className="relative px-6 md:px-12 pt-4 sm:pt-6 md:pt-8 pb-6 md:pb-10 bg-[var(--paper-light)]"
+>
           <div className="absolute inset-0 bg-black/10 pointer-events-none" />
 
           <div className={CONTAINER}>
@@ -25,7 +24,7 @@ export default function ServicesPage() {
             </h2>
 
             {/* SERVICES GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-40 lg:gap-28 xl:gap-42">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-14 md:gap-6">
               {[
                 {
                   title: 'Project Design',
@@ -155,10 +154,12 @@ export default function ServicesPage() {
                     },
                   ],
                 },
-              ].map((cat) => (
+              ].map((cat, i) => (
                 <div
   key={cat.title}
-  className="w-full flex flex-col items-center md:items-start"
+  className={`w-fit flex flex-col items-center md:items-start justify-self-center ${
+    ['md:justify-self-start', 'md:justify-self-center', 'md:justify-self-end'][i]
+  }`}
 >
   {/* MAIN SERVICE ICON */}
   <div className="w-16 h-16 md:w-24 md:h-24 rounded-full border-2 border-[var(--brass)] flex-shrink-0 flex items-center justify-center mb-4 text-[var(--brass)]">
@@ -174,7 +175,7 @@ export default function ServicesPage() {
   <div className="w-36 md:w-44 h-[2px] bg-[var(--brass)] mb-7 md:mb-9" />
 
   {/* LEAVE SUBSERVICES EXACTLY AS THEY ARE */}
-  <ul className="w-full max-w-[310px] space-y-6">
+  <ul className="w-fit space-y-6">
     {cat.items.map((item) => (
       <li
         key={item.label}
@@ -199,7 +200,7 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        <div className="flex items-center justify-center md:mt-2 mb-2">
+        <div className="flex items-center justify-center mt-4 mb-2">
           <a
             href="/contact"
             className="magnetic font-mono text-sm md:text-lg uppercase px-4 py-2 md:px-6 md:py-3  rounded-full bg-[var(--on-dark)] text-[var(--brass)] shadow-xl whitespace-nowrap"

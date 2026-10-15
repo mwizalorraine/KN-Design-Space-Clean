@@ -1,6 +1,9 @@
 'use client';
 import { useState } from 'react';
 
+const API_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
+
 export default function NewsletterForm() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
@@ -9,7 +12,7 @@ export default function NewsletterForm() {
     e.preventDefault();
     setStatus('sending');
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/subscribe/', {
+      const res = await fetch(`${API_URL}/api/subscribe/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

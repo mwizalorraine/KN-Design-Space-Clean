@@ -8,6 +8,9 @@ import WelcomeSplash from './components/WelcomeSplash';
 
 const rotatorWords = ['how you live.', 'how you work.', 'how you gather.', 'how you rest.'];
 
+const API_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
+
 const categoryLabels: Record<string, string> = {
   education: 'Education & Institutional',
   health: 'Health & Foodservice',
@@ -72,14 +75,14 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/projects/')
+    fetch(`${API_URL}/api/projects/`)
       .then((res) => res.json())
       .then(setProjects)
       .catch(() => setProjects([]));
   }, []);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/category-images/')
+    fetch(`${API_URL}/api/category-images/`)
       .then((res) => res.json())
       .then((data: { category: string; image: string }[]) => {
         const map: Record<string, string> = {};
@@ -208,10 +211,9 @@ export default function Home() {
       </section>
 
       {/* SERVICES — background stays full-bleed, inner content capped */}
-      <section
-          id="services"
-          className="relative min-h-[calc(100dvh-84px)] px-6 md:px-12 py-12 md:py-20 bg-[var(--paper-light)]"
-        >
+      <section id="services"
+          className="relative px-6 md:px-12 pt-4 sm:pt-6 md:pt-8 pb-6 md:pb-10 bg-[var(--paper-light)]"
+>
           <div className="absolute inset-0 bg-black/10 pointer-events-none" />
 
           <div className={CONTAINER}>
@@ -220,7 +222,7 @@ export default function Home() {
             </h2>
 
             {/* SERVICES GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-40 lg:gap-28 xl:gap-42">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-14 md:gap-6">
               {[
                 {
                   title: 'Project Design',
@@ -350,10 +352,12 @@ export default function Home() {
                     },
                   ],
                 },
-              ].map((cat) => (
+              ].map((cat, i) => (
                 <div
   key={cat.title}
-  className="w-full flex flex-col items-center md:items-start"
+  className={`w-fit flex flex-col items-center md:items-start justify-self-center ${
+    ['md:justify-self-start', 'md:justify-self-center', 'md:justify-self-end'][i]
+  }`}
 >
   {/* MAIN SERVICE ICON */}
   <div className="w-16 h-16 md:w-24 md:h-24 rounded-full border-2 border-[var(--brass)] flex-shrink-0 flex items-center justify-center mb-4 text-[var(--brass)]">
@@ -369,11 +373,11 @@ export default function Home() {
   <div className="w-36 md:w-44 h-[2px] bg-[var(--brass)] mb-7 md:mb-9" />
 
   {/* LEAVE SUBSERVICES EXACTLY AS THEY ARE */}
-  <ul className="w-full max-w-[310px] space-y-6">
+  <ul className="w-fit space-y-6">
     {cat.items.map((item) => (
       <li
         key={item.label}
-        className="grid grid-cols-[44px_1fr] gap-8 md:gap-4 items-center"
+        className="grid grid-cols-[44px_1fr] gap-10 md:gap-4 items-center"
       >
         <span className="w-11 h-10 flex items-center justify-center shrink-0">
           {item.icon}

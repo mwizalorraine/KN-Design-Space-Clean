@@ -12,7 +12,7 @@ export default function WelcomeSplash() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const WELCOME_TEXT =
-    'Transforming Lives Through Architecture    ...';
+    'Transforming Lives Through Architecture    ';
 
   useEffect(() => {
     const seen = sessionStorage.getItem('kn_welcome_seen');
@@ -182,7 +182,7 @@ export default function WelcomeSplash() {
               }}
               className="w-full max-w-[420px]"
             >
-              <div className="h-[12px] w-full bg-white/20 overflow-hidden rounded-full">
+              <div className="h-[8px] md:h-[12px] w-full bg-white/20 overflow-hidden rounded-full">
                 <div
                   className="h-full bg-[var(--brass)] transition-[width] duration-100 ease-linear"
                   style={{
