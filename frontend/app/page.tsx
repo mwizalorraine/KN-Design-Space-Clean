@@ -27,7 +27,7 @@ const categoryLabels: Record<string, string> = {
 const CONTAINER = 'max-w-[1440px]';
 
 type Project = {
-  id: number;
+  id: number; 
   title: string;
   slug: string;
   category: string;
