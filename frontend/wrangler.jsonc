@@ -1,7 +1,7 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"main": ".open-next/worker.js",
-	"name": "frontend",
+	"name": "kndesignspace", 
 	"compatibility_date": "2026-10-16",
 	"compatibility_flags": [
 		"nodejs_compat",
