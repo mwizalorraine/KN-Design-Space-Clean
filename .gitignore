@@ -31,3 +31,17 @@ frontend/build/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Unused Cloudflare Django example
+django-worker/
+
+# Temporary Cloudinary investigation files
+Backend/cloudinary_image_map.json
+Backend/cloudinary_inventory.json
+Backend/cloudinary_match_report.csv
+Backend/cloudinary_single_candidates.csv
+Backend/inventory_cloudinary_assets.py
+Backend/upload_media_to_cloudinary.py
+
+# Dependencies in any project folder
+node_modules/
