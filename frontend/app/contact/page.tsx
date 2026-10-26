@@ -33,8 +33,8 @@ export default function Contact() {
   };
 
   const address = 'KN 5 Rd, Immeuble Aigle Blanc, Kimihurura, Kigali, Rwanda';
-  const mapEmbedSrc = `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
-  const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(address)}`;
+  const mapEmbedSrc = `https://www.google.com/maps?q=-1.953556%2C30.0962787&output=embed`;
+  const directionsHref = `https://www.google.com/maps/dir/?api=1&destination=-1.953556%2C30.0962787`;
 
   return (
     <>
