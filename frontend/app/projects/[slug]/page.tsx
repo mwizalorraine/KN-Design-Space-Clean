@@ -692,7 +692,7 @@ export default function ProjectDetail() {
               duration: 0.7,
             }}
           >
-            <div className="font-mono text-xs uppercase text-[var(--brass)] mb-4">
+            <div className="inline-block font-mono text-xs uppercase text-white bg-black/35 px-2 py-1 rounded-sm drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] mb-4">
               {categoryLabels[project.category]} —{' '}
               {project.status}
             </div>
