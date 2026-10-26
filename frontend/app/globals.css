@@ -36,21 +36,11 @@
 body{
   background: var(--paper);
   color: var(--ink);
-  cursor: none;
+  cursor: auto;
 }
 @media (max-width: 900px){
   body{ cursor:auto; }
-}
-
-#cursor{
-  position:fixed; width:10px; height:10px; border-radius:50%;
-  background:var(--ink); pointer-events:none; z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:width .25s, height .25s, background .25s;
-  mix-blend-mode:difference;
-}
-#cursor.magnet{ width:56px; height:56px; background:var(--brass); }
-@media (max-width:900px){ #cursor{display:none;} }
+} 
 
 .ticker-track{
   display:flex; width:max-content;
