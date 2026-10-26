@@ -101,7 +101,7 @@ export default function Home() {
       {/* HERO — photo + gradient stay full-bleed; only the text column is capped */}
       <section id="home-sentinel" className="relative w-full h-[70vh] md:h-[102vh] min-h-[480px] md:min-h-[660px] overflow-hidden">
         <img
-          src="/images/night view.png"
+          src="/images/night view.png" 
           alt="KN Design Space project"
           className="absolute inset-0 w-full h-full object-cover"
         />
