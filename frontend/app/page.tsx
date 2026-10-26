@@ -514,28 +514,31 @@ export default function Home() {
 </div>
 
           <div className="grid md:grid-cols-2 gap-10 md:gap-20 mb-8">
-            <div className="border border-[var(--ink)] p-3 h-fit w-full">
-              <div className="overflow-hidden h-[180px] md:h-[260px] w-full">
-                <iframe
-                  src="https://www.google.com/maps?q=KN%205%20Rd%2C%20Immeuble%20Aigle%20Blanc%2C%20Kimihurura%2C%20Kigali%2C%20Rwanda&output=embed"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, filter: 'grayscale(20%)' }}
-                  loading="lazy"
-                  title="KN Design Space office location"
-                />                
-              </div>
-              <p className="pt-3 font-mono text-[10.5px] uppercase opacity-55">
-                KN 5 Rd, Immeuble Aigle Blanc, 1st Floor, Kimihurura, Kigali
-              </p>
-              <a
-                href="https://www.google.com/maps/dir/?api=1&destination=KN%205%20Rd%2C%20Immeuble%20Aigle%20Blanc%2C%20Kimihurura%2C%20Kigali%2C%20Rwanda"
-                target="_blank"
-                className="magnetic inline-flex items-center gap-2 font-mono text-xs uppercase px-6 py-2.5 rounded-full bg-[var(--brass)] text-[var(--paper-light)] mt-4"
-              >
-                Get directions →
-              </a>
-            </div>
+  <div className="border border-[var(--ink)] p-3 h-fit w-full">
+    <div className="overflow-hidden h-[180px] md:h-[260px] w-full">
+      <iframe
+        src="https://www.google.com/maps?q=-1.953556%2C30.0962787&output=embed"
+        width="100%"
+        height="100%"
+        style={{ border: 0, filter: 'grayscale(20%)' }}
+        loading="lazy"
+        title="KN Design Space office location"
+      />
+    </div>
+
+    <p className="pt-3 font-mono text-[10.5px] uppercase opacity-55">
+      KN 5 Rd, Immeuble Aigle Blanc, 1st Floor, Kimihurura, Kigali
+    </p>
+
+    <a
+      href="https://www.google.com/maps/dir/?api=1&destination=-1.953556%2C30.0962787"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="magnetic inline-flex items-center gap-2 font-mono text-xs uppercase px-6 py-2.5 rounded-full bg-[var(--brass)] text-[var(--paper-light)] mt-4"
+    >
+      Get directions →
+    </a>
+  </div>
 
             <div className="flex flex-col justify-end">
               <div className="flex flex-wrap justify-between gap-y-6 mb-12">
