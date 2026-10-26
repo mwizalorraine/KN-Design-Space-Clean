@@ -523,7 +523,7 @@ export default function Home() {
                   style={{ border: 0, filter: 'grayscale(20%)' }}
                   loading="lazy"
                   title="KN Design Space office location"
-                />
+                />                
               </div>
               <p className="pt-3 font-mono text-[10.5px] uppercase opacity-55">
                 KN 5 Rd, Immeuble Aigle Blanc, 1st Floor, Kimihurura, Kigali
