@@ -1,5 +1,42 @@
 from rest_framework import serializers
+from urllib.parse import urlsplit, urlunsplit
 from .models import Project, ContactMessage, ProjectImage, CategoryImage, NewsletterSubscriber, ProjectSpec, NewsItem, EventItem
+
+def optimize_cloudinary_url(url, width=1200):
+    """
+    Optimize Cloudinary images without changing the stored original files.
+    Non-Cloudinary URLs are returned unchanged.
+    """
+    if not url:
+        return url
+
+    parts = urlsplit(str(url))
+
+    if parts.netloc != "res.cloudinary.com":
+        return url
+
+    path = parts.path
+    marker = "/image/upload/"
+
+    if marker not in path:
+        return url
+
+    prefix, remainder = path.split(marker, 1)
+
+    # Avoid adding duplicate transformations.
+    if remainder.startswith(("f_auto", "q_auto", "w_")):
+        return url
+
+    transformations = f"f_auto,q_auto,w_{width}"
+    optimized_path = f"{prefix}{marker}{transformations}/{remainder}"
+
+    return urlunsplit((
+        parts.scheme,
+        parts.netloc,
+        optimized_path,
+        parts.query,
+        parts.fragment,
+    ))
 
 
 class NewsletterSerializer(serializers.ModelSerializer):
@@ -9,12 +46,22 @@ class NewsletterSerializer(serializers.ModelSerializer):
 
 
 class ProjectImageSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
     class Meta:
         model = ProjectImage
-        fields = ['id', 'image', 'caption', 'order', 'image_type', 'pair_key', 'section']  # added section
+        fields = [
+            'id', 'image', 'caption', 'order',
+            'image_type', 'pair_key', 'section'
+        ]
+
+    def get_image(self, obj):
+        if not obj.image:
+            return None
+        return optimize_cloudinary_url(obj.image.url, width=1200)
 
 
-class ProjectSpecSerializer(serializers.ModelSerializer):  # new
+class ProjectSpecSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjectSpec
         fields = ['label', 'value', 'order']
@@ -22,15 +69,21 @@ class ProjectSpecSerializer(serializers.ModelSerializer):  # new
 
 class ProjectSerializer(serializers.ModelSerializer):
     gallery = ProjectImageSerializer(many=True, read_only=True)
-    specs = ProjectSpecSerializer(many=True, read_only=True)  # new
+    specs = ProjectSpecSerializer(many=True, read_only=True)
+    cover_image = serializers.SerializerMethodField()
 
     class Meta:
         model = Project
         fields = [
             'id', 'title', 'slug', 'category', 'location', 'role', 'status',
             'year', 'summary', 'cover_image', 'featured', 'order',
-            'gallery', 'specs',  # added specs
+            'gallery', 'specs',
         ]
+
+    def get_cover_image(self, obj):
+        if not obj.cover_image:
+            return None
+        return optimize_cloudinary_url(obj.cover_image.url, width=1600)
 
 
 class ContactMessageSerializer(serializers.ModelSerializer):
@@ -47,7 +100,6 @@ class CategoryImageSerializer(serializers.ModelSerializer):
         model = CategoryImage
         fields = ['category', 'image']
 
-    
     def get_image(self, obj):
         cloudinary_urls = {
             'categories/54522764971_f18f0dd182_o_1.jpg':
@@ -70,7 +122,8 @@ class CategoryImageSerializer(serializers.ModelSerializer):
             return None
 
         image_name = obj.image.name.replace('\\', '/')
-        return cloudinary_urls.get(image_name, obj.image.url)
+        url = cloudinary_urls.get(image_name, obj.image.url)
+        return optimize_cloudinary_url(url, width=800)
 
 class NewsItemSerializer(serializers.ModelSerializer):
     class Meta:
