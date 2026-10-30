@@ -28,7 +28,17 @@ export default function WelcomeSplash() {
 
   // Progress bar + exit timer (independent of the video)
   useEffect(() => {
-    if (!show) return;
+  if (show) document.documentElement.dataset.splash = 'running';
+}, [show]);
+
+  useEffect(() => {
+  if (!show) return;
+
+  if (alreadySeen()) {
+    setShow(false);
+    return;
+  }
+  
 
     const start = performance.now();
     let frame: number;
@@ -86,10 +96,12 @@ export default function WelcomeSplash() {
   const revealedCount = Math.floor((progress / 100) * WELCOME_TEXT.length);
   const visibleText = WELCOME_TEXT.slice(0, revealedCount);
 
+  console.log('WelcomeSplash render:', { show, progress }); 
+
   return (
     <AnimatePresence>
       {show && (
-        <motion.div
+        <motion.div id="welcome-splash"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0 }}

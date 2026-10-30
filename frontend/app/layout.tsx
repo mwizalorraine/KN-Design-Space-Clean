@@ -26,7 +26,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             })();
           `}
         </Script>
+        <Script id="splash-init" strategy="beforeInteractive">
+            {`try{document.documentElement.dataset.splash=sessionStorage.getItem('kn_welcome_seen')==='true'?'seen':'new'}catch(e){document.documentElement.dataset.splash='new'}`}
+        </Script>
+
       </head>
+      
       <body className={`${display.variable} ${serif.variable} ${mono.variable} font-serif`}>
         {children}
       </body>
