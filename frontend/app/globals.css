@@ -50,3 +50,6 @@ body{
   filter: invert(1);
 }
 @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+html[data-splash="seen"] #welcome-splash { display: none; } 
+   
