@@ -7,12 +7,13 @@ import ThemeToggle from './ThemeToggle';
 const API_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8000";
 
-const links = [
+const links: { label: string; href: string; special?: boolean }[] = [
   { label: 'Home', href: '/' },
   { label: 'Projects', href: '/projects' },
   { label: 'Team', href: '/studio' },
   { label: 'Services', href: '/services' },
   { label: 'Newsletter', href: '/newsletter' },
+  { label: 'KN Play', href: '/knplay', special: true },
 ];
 
 type SearchResult = {
@@ -36,6 +37,8 @@ export default function NavOverlay() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   const transparent = isHome && !scrolled;
+  const mainLinks = links.filter((l) => !l.special);
+  const playLink = links.find((l) => l.special);
 
   useEffect(() => {
   const onScroll = () => setScrollProgress(Math.min(1, window.scrollY / 140));
@@ -77,6 +80,7 @@ useEffect(() => {
     if (label === 'Team') return pathname === '/studio';
     if (label === 'Services') return pathname.startsWith('/services');
     if (label === 'Newsletter') return pathname === '/newsletter';
+    if (label === 'KN Play') return pathname.startsWith('/knplay');
     return false;
   };
 
@@ -100,79 +104,103 @@ useEffect(() => {
 
   return (
     <>
-      <nav className="fixed top-0 inset-x-0 z-50 px-12 py-5">
-  <div
-    className="absolute inset-0 bg-[var(--paper)] border-b border-[var(--line)]"
-    style={{ opacity: isHome ? scrollProgress : 1 }}
-  />
-  <div className="relative flex items-center justify-between">
+            <nav className="fixed top-0 inset-x-0 z-50 px-6 lg:px-12 py-5">
+        <div
+          className="absolute inset-0 bg-[var(--paper)] border-b border-[var(--line)]"
+          style={{ opacity: isHome ? scrollProgress : 1 }}
+        />
+        <div className="relative flex items-center justify-between gap-6">
 
-        <div className="flex items-center gap-3">
-          <img
-            src="/images/KN_Design_Space_Logo.png"
-            alt="KN Design Space"
-            className={`h-11 w-auto site-logo transition-all duration-300 ${transparent ? 'invert' : ''}`}
-          />
-          <span className={`font-display font-bold text-sm tracking-wide ${transparent ? 'text-white' : ''}`}>KN DESIGN SPACE</span>
-        </div>
+          {/* BRAND */}
+          <div className="flex shrink-0 items-center gap-3">
+            <img
+              src="/images/KN_Design_Space_Logo.png"
+              alt="KN Design Space"
+              className={`h-11 w-auto site-logo transition-all duration-300 ${transparent ? 'invert' : ''}`}
+            />
+            <span className={`font-display font-bold text-sm tracking-wide ${transparent ? 'text-white' : ''}`}>KN DESIGN SPACE</span>
+          </div>
 
-        <div className={`hidden md:flex items-center gap-9 ${transparent ? 'text-white' : ''}`}>
-          {links.map((link) => {
-            const active = isActive(link.label);
-            return (
+          {/* MAIN LINKS */}
+          <div className={`hidden md:flex items-center gap-5 lg:gap-8 ${transparent ? 'text-white' : ''}`}>
+            {mainLinks.map((link) => {
+              const active = isActive(link.label);
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className={`magnetic group relative inline-flex items-center py-1 font-serif text-[15px] uppercase tracking-[0.06em] transition-opacity ${
+                    transparent
+                      ? active ? 'text-white opacity-80' : 'text-white opacity-100 hover:opacity-100'
+                      : active ? 'text-[var(--brass)] opacity-85' : 'text-[var(--brass)] opacity-100 hover:opacity-100'
+                  }`}
+                >
+                  {link.label}
+                  <span
+                    className={`absolute left-0 -bottom-0.5 h-[1px] transition-all duration-300 ${
+                      transparent ? 'bg-white' : 'bg-[var(--brass)]'
+                    } ${active ? 'w-full' : 'w-0 group-hover:w-full'}`}
+                  />
+                </a>
+              );
+            })}
+          </div>
+
+          {/* RIGHT CLUSTER: KN Play, theme toggle, search, Let's talk */}
+          <div className={`flex shrink-0 items-center gap-3 ${transparent ? 'text-white' : 'text-[var(--ink)]'}`}>
+            {playLink && (
               <a
-                key={link.label}
-                href={link.href}
-                className={`magnetic group relative font-serif text-[15px] uppercase tracking-[0.06em] pb-1 transition-opacity ${
+                href={playLink.href}
+                className={`magnetic hidden md:inline-flex h-10 items-center gap-2 rounded-full border px-4 font-mono text-xs uppercase tracking-[0.08em] transition-colors ${
                   transparent
-                    ? active ? 'text-white opacity-80' : 'text-white opacity-100 hover:opacity-100'
-                    : active ? 'text-[var(--brass)] opacity-85' : 'text-[var(--brass)] opacity-100 hover:opacity-100'
+                    ? isActive(playLink.label)
+                      ? 'bg-white border-white text-[var(--ink)]'
+                      : 'border-white text-white hover:bg-white hover:text-[var(--ink)]'
+                    : isActive(playLink.label)
+                      ? 'bg-[var(--brass)] border-[var(--brass)] text-[var(--paper-light)]'
+                      : 'border-[var(--brass)] text-[var(--brass)] hover:bg-[var(--brass)] hover:text-[var(--paper-light)]'
                 }`}
               >
-                {link.label}
-                <span
-                  className={`absolute left-0 -bottom-0.5 h-[1px] transition-all duration-300 ${
-                    transparent ? 'bg-white' : 'bg-[var(--brass)]'
-                  } ${active ? 'w-full' : 'w-0 group-hover:w-full'}`}
-                />
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-current opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-current" />
+                </span>
+                {playLink.label}
               </a>
-            );
-          })}
-        </div>
+            )}
 
-        <div className={`flex items-center gap-3 ${transparent ? 'text-white' : 'text-[var(--ink)]'}`}>
-          <ThemeToggle />
+            <ThemeToggle />
 
-          <button
-            onClick={() => setSearchOpen((v) => !v)}
-            aria-label="Search"
-            className={`magnetic hidden md:flex items-center justify-center w-10 h-10 rounded-full transition-colors ${
-              transparent ? 'hover:bg-white/15' : 'hover:bg-[var(--line)]'
-            }`}
-          >
-            <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-none stroke-current" strokeWidth="1.8">
-              <circle cx="11" cy="11" r="7" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </button>
+            <button
+              onClick={() => setSearchOpen((v) => !v)}
+              aria-label="Search"
+              className={`magnetic hidden md:flex items-center justify-center w-10 h-10 rounded-full transition-colors ${
+                transparent ? 'hover:bg-white/15' : 'hover:bg-[var(--line)]'
+              }`}
+            >
+              <svg viewBox="0 0 24 24" className="w-4.5 h-4.5 fill-none stroke-current" strokeWidth="1.8">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </button>
 
-          <a
-            href="/contact"
-            className={`magnetic hidden sm:inline-flex font-mono text-xs uppercase tracking-wide rounded-full px-5 py-2.5 border transition-colors ${
-              transparent
-                ? 'border-white text-white hover:bg-white hover:text-[var(--ink)]'
-                : 'border-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper-light)]'
-            }`}
-          >
-            Let&apos;s talk →
-          </a>
+            <a
+              href="/contact"
+              className={`magnetic hidden sm:inline-flex h-10 items-center font-mono text-xs uppercase tracking-wide rounded-full px-5 border transition-colors ${
+                transparent
+                  ? 'border-white text-white hover:bg-white hover:text-[var(--ink)]'
+                  : 'border-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--paper-light)]'
+              }`}
+            >
+              Let&apos;s talk →
+            </a>
 
-          <button onClick={() => setOpen(true)} className="magnetic md:hidden flex flex-col justify-center gap-1.5 w-8 h-8">
-            <span className={`block h-[1.5px] w-full transition-colors ${transparent ? 'bg-white' : 'bg-[var(--ink)]'}`} />
-            <span className={`block h-[1.5px] w-full transition-colors ${transparent ? 'bg-white' : 'bg-[var(--ink)]'}`} />
-            <span className={`block h-[1.5px] w-full transition-colors ${transparent ? 'bg-white' : 'bg-[var(--ink)]'}`} />
-          </button>
-        </div>
+            <button onClick={() => setOpen(true)} className="magnetic md:hidden flex flex-col justify-center gap-1.5 w-8 h-8">
+              <span className={`block h-[1.5px] w-full transition-colors ${transparent ? 'bg-white' : 'bg-[var(--ink)]'}`} />
+              <span className={`block h-[1.5px] w-full transition-colors ${transparent ? 'bg-white' : 'bg-[var(--ink)]'}`} />
+              <span className={`block h-[1.5px] w-full transition-colors ${transparent ? 'bg-white' : 'bg-[var(--ink)]'}`} />
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -281,8 +309,17 @@ useEffect(() => {
                         transition={{ delay: 0.1 + i * 0.05, duration: 0.4 }}
                         onClick={() => setOpen(false)}
                       >
-                        <span className={active ? 'text-[var(--brass)]' : 'group-hover:text-[var(--brass)] transition-colors'}>
+                        <span
+                          className={`flex items-center gap-3 ${
+                            active || link.special ? 'text-[var(--brass)]' : 'group-hover:text-[var(--brass)] transition-colors'
+                          }`}
+                        >
                           {link.label}
+                          {link.special && (
+                            <span className="rounded-full border border-[var(--brass)] px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em]">
+                              Special
+                            </span>
+                          )}
                         </span>
                         <span className="font-mono text-xs opacity-40 group-hover:opacity-100 group-hover:text-[var(--brass)] transition-all">
                           →
