@@ -67,7 +67,7 @@ export default function CategoryPage() {
         >
           {projects.length === 0 && (
             <div className="bg-[var(--paper)] p-8 font-mono text-sm opacity-60 md:col-span-3">
-              No projects in this category yet.
+              Loading projects....
             </div>
           )}
           {projects.map((p) => (

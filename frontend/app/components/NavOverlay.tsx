@@ -151,7 +151,8 @@ useEffect(() => {
             {playLink && (
               <a
                 href={playLink.href}
-                className={`magnetic hidden md:inline-flex h-10 items-center gap-2 rounded-full border px-4 font-mono text-xs uppercase tracking-[0.08em] transition-colors ${
+                aria-label={playLink.label}
+                className={`magnetic hidden md:inline-flex h-13 w-13 -my-1.5 items-center justify-center rounded-full border transition-colors ${
                   transparent
                     ? isActive(playLink.label)
                       ? 'bg-white border-white text-[var(--ink)]'
@@ -161,11 +162,27 @@ useEffect(() => {
                       : 'border-[var(--brass)] text-[var(--brass)] hover:bg-[var(--brass)] hover:text-[var(--paper-light)]'
                 }`}
               >
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-current opacity-60" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-current" />
+                <span aria-hidden="true" className="relative block h-[28px] w-[34px]">
+                  {/* your exact logo, painted in whatever colour the button currently uses */}
+                  <span
+                    className="absolute inset-0 bg-current"
+                    style={{ 
+                      WebkitMaskImage: 'url(/images/kn-play-mark.png)', 
+                      maskImage: 'url(/images/kn-play-mark.png)',
+                      WebkitMaskRepeat: 'no-repeat',
+                      maskRepeat: 'no-repeat',
+                      WebkitMaskSize: '100% 100%',
+                      maskSize: '100% 100%', 
+                    }}
+                  />
+                  {/* the logo's full stop pulses softly, which is where your brass dot lives now */}
+                  <span
+                    className="absolute h-[3px] w-[3px] -translate-x-1/2 -translate-y-1/2"
+                    style={{ left: '94.85%', top: '84.51%' }}
+                  >
+                    <span className="absolute inset-0 animate-ping rounded-full bg-current opacity-70" />
+                  </span>
                 </span>
-                {playLink.label}
               </a>
             )}
 

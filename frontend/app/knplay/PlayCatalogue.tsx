@@ -4,8 +4,13 @@ import { useEffect, useState } from "react";
 import "./play.css";
 import {
   PLAY_GARDENS,
+  PLAY_GIFT,
   PLAY_GROUPS,
   PLAY_PIECES,
+  PLAY_SAFETY,
+  PLAY_SPACES,
+  PLAY_SPACES_INTRO,
+  playImg,
   type PlayGarden,
   type PlayPiece,
 } from "./knPlay";
@@ -141,6 +146,85 @@ export default function PlayCatalogue() {
           </section>
         )}
       </main>
+
+            <section className="wrap spaces" id="spaces" aria-labelledby="spaces-h">
+        <div className="intro">
+          <div>
+            <span className="mono">{PLAY_SPACES_INTRO.label}</span>
+            <h2 id="spaces-h">{PLAY_SPACES_INTRO.title}</h2>
+          </div>
+          <p>{PLAY_SPACES_INTRO.text}</p>
+        </div>
+        <div className="spgrid">
+          {PLAY_SPACES.map((s) => (
+            <article className="piece" key={s.title}>
+              <div className="ph">
+                <img loading="lazy" src={playImg(s.img)} alt={`${s.title}, concept visualisation`} />
+              </div>
+              <div className="nm">
+                <h3>{s.title}</h3>
+              </div>
+              <p className="desc">{s.text}</p>
+              <dl>
+                <dt>Pieces</dt>
+                <dd>{s.pieces}</dd>
+              </dl>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="wrap gift" id="gift" aria-labelledby="gift-h">
+        <div className="intro">
+          <div>
+            <span className="mono">{PLAY_GIFT.label}</span>
+            <h2 id="gift-h">{PLAY_GIFT.title}</h2>
+          </div>
+          <p>{PLAY_GIFT.intro}</p>
+        </div>
+        <div className="gbox">
+          <div className="gwhy">
+            {PLAY_GIFT.why.map((w) => (
+              <div key={w.title}>
+                <h3>{w.title}</h3>
+                <p>{w.text}</p>
+              </div>
+            ))}
+          </div>
+          <p className="who">{PLAY_GIFT.who}</p>
+          <div className="gsteps">
+            {PLAY_GIFT.steps.map((s, i) => (
+              <div key={s.title}>
+                <span className="n">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </div>
+            ))}
+          </div>
+          <p className="who" style={{ color: "var(--grey)" }}>{PLAY_GIFT.receive}</p>
+        </div>
+      </section>
+
+      <section className="wrap safety" id="safety" aria-labelledby="safety-h">
+        <div className="intro">
+          <div>
+            <span className="mono">{PLAY_SAFETY.label}</span>
+            <h2 id="safety-h">{PLAY_SAFETY.title}</h2>
+          </div>
+          <p>{PLAY_SAFETY.intro}</p>
+        </div>
+        <div className="sgrid">
+          {PLAY_SAFETY.items.map((it, i) => (
+            <div className="sitem" key={it.title}>
+              <span className="n">{String(i + 1).padStart(2, "0")}</span>
+              <div>
+                <h3>{it.title}</h3>
+                <p>{it.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <div className="cta">
         <div className="wrap">

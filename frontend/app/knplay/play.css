@@ -58,4 +58,37 @@
   .knplay .hero{grid-template-columns:1fr}
   .knplay .cta .wrap{grid-template-columns:1fr}
   .knplay .grid,.knplay .gardens{grid-template-columns:1fr}
+  .knplay .points{grid-template-columns:1fr}
+}
+
+/* ---- Every space, Gift a play space, Safety (matches the prototype; hardened against other site styles) ---- */
+.knplay section.spaces,.knplay section.gift,.knplay section.safety{margin-top:48px;padding-block:36px 8px;border-top:1px solid var(--ink)}
+.knplay section.gift{padding-block:36px 30px}
+
+.knplay section.spaces .intro,.knplay section.gift .intro,.knplay section.safety .intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:16px 48px;align-items:end;margin:0 0 26px;max-width:none}
+.knplay section.spaces h2,.knplay section.gift h2,.knplay section.safety h2{margin:0;font-family:var(--sans);font-size:clamp(30px,4vw,40px);font-weight:600;letter-spacing:-.02em;line-height:1.05;text-wrap:balance}
+.knplay section.spaces .intro p,.knplay section.gift .intro p,.knplay section.safety .intro p{margin:0;font-size:15px;line-height:1.5;color:var(--grey);max-width:none}
+
+.knplay .spgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:34px 26px}
+
+.knplay .gbox{background:var(--sheet);border:1px solid var(--rule);padding:24px;display:grid;gap:22px}
+.knplay .gwhy{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0 26px}
+.knplay .gwhy div,.knplay .gsteps div{border-top:1px solid var(--rule);padding:12px 0}
+.knplay .gwhy h3,.knplay .gsteps h3{margin:0 0 3px;font-family:var(--sans);font-size:16px;font-weight:600;line-height:1.5;letter-spacing:normal}
+.knplay .gwhy p,.knplay .gsteps p{margin:0;font-size:14px;line-height:1.5;color:var(--grey)}
+.knplay .gsteps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 22px}
+.knplay .gsteps .n{font:500 11px var(--mono);color:var(--acc);letter-spacing:.06em}
+.knplay .gift .who{margin:0;max-width:760px;font-size:15px;line-height:1.5}
+
+.knplay .sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:0 26px}
+.knplay .sitem{display:grid;grid-template-columns:44px 1fr;border-top:1px solid var(--rule);padding:14px 0}
+.knplay .sitem .n{font:500 11px var(--mono);letter-spacing:.06em;color:var(--acc);padding-top:3px}
+.knplay .sitem h3{margin:0 0 3px;font-family:var(--sans);font-size:16px;font-weight:600;line-height:1.5;letter-spacing:normal}
+.knplay .sitem p{margin:0;font-size:14px;line-height:1.5;color:var(--grey)}
+
+.knplay .cta a{text-decoration:underline}
+.knplay .intro .mono,.knplay .gsteps .n{display:block}
+
+@media (max-width:640px){
+  .knplay section.spaces .intro,.knplay section.gift .intro,.knplay section.safety .intro{grid-template-columns:1fr}
 }
